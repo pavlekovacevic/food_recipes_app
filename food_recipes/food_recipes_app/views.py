@@ -5,9 +5,7 @@ from rest_framework import filters
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 from food_recipes_app import serializers
-from rest_framework.permissions import IsAuthenticated
 from django.db.models import Count
-
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     """Handle creating and updating profiles"""        
@@ -61,5 +59,3 @@ class MostUsedIngredients(viewsets.ModelViewSet):
     def get_queryset(self):
         most_used = models.RecipeIngredient.objects.all().values('ingredient').annotate(total=Count('ingredient')).order_by('-total')[:5]
         return most_used
-
-    

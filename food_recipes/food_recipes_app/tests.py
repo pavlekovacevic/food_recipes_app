@@ -1,5 +1,5 @@
 from rest_framework.test import APIClient
-from food_recipes_app.models import UserProfile
+from food_recipes_app.models import UserProfile, Recipe
 from rest_framework.test import APITestCase
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -15,7 +15,7 @@ class MyTestCase(APITestCase):
         #simulira login samim tim sto nam je dao token i vazi za kredencijale ovog usera
         self.client = APIClient(HTTP_AUTHORIZATION='Token ' + token.key)
 
-        
+    
 
     def test_firstOne(self):
         
@@ -30,7 +30,6 @@ class MyTestCase(APITestCase):
             'email':'newgmail@gmail.com',
             'password':'password'
         })
-        
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 # def test_create_user_invalid_data(), data is not valid and the req is interupted
@@ -40,7 +39,7 @@ class MyTestCase(APITestCase):
             'email':'test@test.com',
             'password':'password'
         })
-        
+        import pdb;pdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 # def test_create_user_already_in_db(), user tries to signup but the profile is already create
@@ -50,7 +49,7 @@ class MyTestCase(APITestCase):
             'email':'test@test.com',
             'password':'password'
         })
-        
+        import pdb;pdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 # def test_user_login(), correct credentials and user gets a token, request continues
@@ -59,7 +58,7 @@ class MyTestCase(APITestCase):
             'username':'test@test.com',
             'password':'password'
         })
-        
+        import pdb;pdb.set_trace()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 # def test_user_login_forbidden_user(), credentials not correct user does not get a token
@@ -77,16 +76,5 @@ class MyTestCase(APITestCase):
             'username':123,
             'password':'forbidden'
         })
-        
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_add_new_recipe(self):
-        response = self.client.post('/api/recipes/', data={
-            "name": "test55",
-            "description": "test55",
-            "ingredients": [{"name":"ing55"}, {"name":"ing56"}, {"name":"ing50"}]
-        })
-
-                
         import pdb;pdb.set_trace()
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
