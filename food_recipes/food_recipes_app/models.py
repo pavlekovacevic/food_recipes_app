@@ -59,19 +59,24 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
-    ingredients = models.ManyToManyField(Ingredient, blank=True, related_name='recipes', through="RecipeIngredient")
+    ingredients = models.ManyToManyField(Ingredient, blank=True, related_name='recipes', through='RecipeIngredient')
+    ratings = models.ManyToManyField(UserProfile, related_name='recipes', through='UserRating')
     created_on = models.DateTimeField(auto_now_add=True)
     user_profile=models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete = models.DO_NOTHING 
     )
+
+    def __str__(self):
+        """return string representation of our user """
+        return self.name
     
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
@@ -83,12 +88,10 @@ class UserRating(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete = models.DO_NOTHING 
     )
-    recipe = models.ForeignKey(on_delete = models.DO_NOTHING, to=Recipe)
-    rating =  models.IntegerField(
+    recipe = models.ForeignKey(Recipe, on_delete= models.DO_NOTHING)
+    rating = models.IntegerField(
         validators=[
             MaxValueValidator(5),
             MinValueValidator(1)
         ]
      )
-
-
