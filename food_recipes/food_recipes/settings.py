@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'food_recipes.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres', #koristi env varijable ne ovako, popravi kasnije
+        'NAME': 'postgres', 
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
